@@ -1,0 +1,7 @@
+.idea/
+tmp
+__pycache__
+*.pyc
+*.pyo
+local_settings.py
+
