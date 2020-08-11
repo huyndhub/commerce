@@ -22,5 +22,6 @@ api_urlpatterns = [
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('apps.app_base.urls')),
     path('greeting/', include('apps.greeting.urls'))
 ] + api_urlpatterns

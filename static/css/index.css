@@ -1,0 +1,49 @@
+#header {
+    padding: 0 15%;
+    background: linear-gradient(-180deg,#f53d2d,#f63);
+}
+
+#header a, span {
+    color: white;
+    text-decoration: None;
+}
+
+#header .header__top {
+    height: 40px;
+}
+
+#header .header__bottom {
+    height: 80px;
+}
+
+.header__top .navbar__top-left {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.header__top .navbar__top-right {
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+    padding: 0;
+}
+
+.header__bottom .header__logo {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.header__bottom .header__search {
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.header__bottom .header__cart {
+    display: flex;
+    flex-flow: row-reverse;
+    align-items: center;
+    padding: 0;
+}
