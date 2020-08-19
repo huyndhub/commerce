@@ -46,6 +46,7 @@ BASE_APPS = [
 INSTALLED_APPS = BASE_APPS + [
     'apps.app_base',
     'apps.greeting',
+    'apps.personal',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'static',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'apps.app_base.api.pagination.StandardResultsSetPagination',
+}
