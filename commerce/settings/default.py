@@ -139,4 +139,5 @@ STATICFILES_DIRS = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'apps.app_base.api.pagination.StandardResultsSetPagination',
+    'EXCEPTION_HANDLER': 'apps.app_base.api.exceptions.custom_exception_handler',
 }

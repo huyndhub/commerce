@@ -1,11 +1,11 @@
 from rest_framework import exceptions
 from rest_framework.views import APIView
-from rest_framework.response import Response
 
 from apps.personal.models import Account, BlacklistToken
 
 from ..utils import decrypt
 from .permission import TokenAuthentication
+from .response import SuccessResponse
 
 
 class LoginView(APIView):
@@ -21,9 +21,7 @@ class LoginView(APIView):
             raise exceptions.NotFound('Not found username.')
 
         jwt_token = Account.encode_auth_token(account.pk)
-        return Response({
-            'Success': {'token': jwt_token}
-        }, status='200')
+        return SuccessResponse(message='Login success.', data={'token': jwt_token})
 
 
 class LogoutView(APIView):
@@ -32,9 +30,7 @@ class LogoutView(APIView):
     def post(self, request):
         try:
             BlacklistToken.objects.create(token=request.auth, account_id=request.user.id)
-            return Response({
-                'Success': {'logout': True}
-            }, status='200')
+            return SuccessResponse(message='Logout success.')
         except Exception as e:
             print(e)
             raise exceptions.APIException
