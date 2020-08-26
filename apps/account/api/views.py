@@ -1,11 +1,14 @@
+from django.contrib.auth.models import User
 from rest_framework import exceptions
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.views import APIView
 
-from apps.personal.models import Account, BlacklistToken
+from apps.app_base.api.response import SuccessResponse
 
-from ..utils import decrypt
+from ..models import UserInfo, BlacklistToken
+from ..utils import encode_auth_token
 from .permission import TokenAuthentication
-from .response import SuccessResponse
+from .serializers import UserInfoSerializer
 
 
 class LoginView(APIView):
@@ -13,14 +16,13 @@ class LoginView(APIView):
         username = request.data.get('username')
         password = request.data.get('password')
         try:
-            account = Account.objects.get(username=username)
-            password_decrypt = decrypt(account.password)
-            if password != password_decrypt:
+            user = User.objects.get(username=username)
+            if not user.check_password(password):
                 raise exceptions.AuthenticationFailed('Invalid password.')
-        except Account.DoesNotExist:
+        except User.DoesNotExist:
             raise exceptions.NotFound('Not found username.')
 
-        jwt_token = Account.encode_auth_token(account.pk)
+        jwt_token = encode_auth_token(user.pk)
         return SuccessResponse(message='Login success.', data={'token': jwt_token})
 
 
@@ -29,8 +31,14 @@ class LogoutView(APIView):
 
     def post(self, request):
         try:
-            BlacklistToken.objects.create(token=request.auth, account_id=request.user.id)
+            BlacklistToken.objects.create(token=request.auth, user_id=request.user.id)
             return SuccessResponse(message='Logout success.')
         except Exception as e:
             print(e)
             raise exceptions.APIException
+
+
+class ListCreateView(ListCreateAPIView):
+    authentication_classes = (TokenAuthentication, )
+    queryset = UserInfo.objects.all()
+    serializer_class = UserInfoSerializer
