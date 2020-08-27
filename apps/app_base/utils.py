@@ -1,4 +1,5 @@
-import base64, os
+import base64
+import os
 from cryptography.fernet import Fernet
 
 from commerce.settings.common import ENCRYPT_KEY

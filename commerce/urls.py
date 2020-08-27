@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from .settings.common import ADMIN_SITE_HEADER, ADMIN_INDEX_TITLE
+
 api_urlpatterns = [
-    path('api/', include('apps.app_base.api.urls')),
+    path('api/account/', include('apps.account.api.urls')),
     path('api/greeting/', include('apps.greeting.api.urls')),
-    path('api/personal/', include('apps.personal.api.urls')),
 ]
 
 urlpatterns = [
@@ -27,3 +28,8 @@ urlpatterns = [
     path('', include('apps.app_base.urls')),
     path('greeting/', include('apps.greeting.urls'))
 ] + api_urlpatterns
+
+admin.site.enable_nav_sidebar = False
+admin.site.site_header = ADMIN_SITE_HEADER
+admin.site.index_title = ADMIN_INDEX_TITLE
+admin.site.site_url = None

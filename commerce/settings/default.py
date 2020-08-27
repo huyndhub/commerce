@@ -42,11 +42,12 @@ BASE_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bootstrap4',
+    'admin_reorder',
 ]
 INSTALLED_APPS = BASE_APPS + [
     'apps.app_base',
     'apps.greeting',
-    'apps.personal',
+    'apps.account',
 ]
 
 MIDDLEWARE = [
@@ -57,7 +58,20 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
 ]
+
+ADMIN_REORDER = (
+    {'app': 'account', 'label': 'ACCOUNT, AUTHENTICATION AND AUTHORIZATION', 'models': (
+        'auth.Group',
+        'auth.User',
+        'account.UserInfo',
+        'account.BlacklistToken',
+    )},
+    {'app': 'greeting', 'models': (
+        'greeting.Greeting',
+    )},
+)
 
 ROOT_URLCONF = 'commerce.urls'
 
