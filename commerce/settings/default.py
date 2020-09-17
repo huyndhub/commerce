@@ -43,6 +43,7 @@ BASE_APPS = [
     'django.contrib.staticfiles',
     'bootstrap4',
     'admin_reorder',
+    'fcm_django',
 ]
 INSTALLED_APPS = BASE_APPS + [
     'apps.app_base',
@@ -70,6 +71,9 @@ ADMIN_REORDER = (
     )},
     {'app': 'greeting', 'models': (
         'greeting.Greeting',
+    )},
+    {'app': 'fcm_django', 'models': (
+        'fcm_django.FCMDevice',
     )},
 )
 
@@ -150,8 +154,14 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     'static',
 ]
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_cdn", "media_root")
+MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'apps.app_base.api.pagination.StandardResultsSetPagination',
     'EXCEPTION_HANDLER': 'apps.app_base.api.exceptions.custom_exception_handler',
+}
+
+FCM_DJANGO_SETTINGS = {
+    "FCM_SERVER_KEY": "AAAAAHjGZ5g:APA91bEeH535_nucFd2CkkKzPHFwVEOqHEmM9FL6ncnA4WyooOPodP6x7RmZko59mKQFeyDyj61w5zfZfRgUIFsER-CKVb3oX-aGwiAcrNf4vnXDuhnZIUlxIXAq52gG_vWvK5bugP61"
 }

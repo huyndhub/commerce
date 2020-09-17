@@ -36,6 +36,10 @@ class UserInfo(models.Model):
         verbose_name = "User info"
         verbose_name_plural = "Users info"
 
+    def save(self, *args, **kwargs):
+        self.full_name = self.user.get_full_name() if self.user else None
+        super(UserInfo, self).save(*args, **kwargs)
+
     def __str__(self):
         return self.full_name or '-'
 
